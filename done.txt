@@ -1,0 +1,36 @@
+test sprite
+map load
+large map
+scroll map
+camera
+collision
+cursor
+create bullet on click
+bullet travel towards cursor
+fix collision bug
+wall shadows
+enemy sprite
+player shadow
+enemy collide bullet
+flash sprite white
+sprite groups
+kill bullets
+player shadow appears over tiles
+enemy ai
+enemy move towards player
+create layer for entities, walls and bullets
+split walls and floor
+z sort entity layer
+camera not working
+bullet velocity wrong
+animated sprites
+store named animations
+rename tileset to spritesheet
+enemy collide walls
+enemy spawn
+enemy die
+enemy stay set distance from player
+camera shake
+
+
+http://opengameart.org/content/tiny-16-basic

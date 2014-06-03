@@ -1,0 +1,109 @@
+/**
+ * a single tile map layer
+ */
+var MapLayer = function(data, tileset, tileWidth, tileHeight) {
+
+	this.data = data.data;
+	this.width = data.width;
+	this.height = this.data.length / this.width;
+	this.tileset = tileset;
+    this.tileWidth = tileWidth;
+    this.tileHeight = tileHeight;
+    
+	this._collidables = [];
+	
+	// a rectangle encompassing the map layer
+	this.shape = new Rect(
+		this.width * this.tileWidth,
+		this.height * this.tileHeight
+	);
+	
+	// the container for the tile sprites is never attached to the stage so we control when it renders
+	this.container = new PIXI.DisplayObjectContainer();
+	
+	this.tiles = [];
+	
+	// the render texture which the layer is drawn to
+	this.texture = new PIXI.RenderTexture( this.width * this.tileWidth, this.height * this.tileHeight );
+	
+	// the sprite which is attached to the map
+	this.sprite = new PIXI.Sprite( this.texture );
+
+	this.generateTiles();
+	
+	this.render();
+	
+};
+
+
+/**
+ * generate the map tiles
+ */
+MapLayer.prototype.generateTiles = function() {
+	
+	var x, y, i, type, tile;
+
+	for ( y = 0; y < this.height; y++ ) {
+		
+		for ( x = 0; x < this.width; x++ ) {
+
+			i = x + (y * this.width);
+			type = this.data[i];
+			
+			// 0 tile is a gap
+			if ( type == 0 ) { continue; }
+			
+			tile = new Tile(
+				type,
+				this.tileset[ type - 1 ], // offset by 1 because tileset starts at 0
+				x * this.tileWidth,
+				y * this.tileHeight
+			);
+			
+			this.tiles.push(tile);
+			
+			this.container.addChild( tile.sprite );
+		}
+		
+	}
+	
+};
+
+
+/**
+ * render the current state
+ */
+MapLayer.prototype.render = function() {
+
+	this.texture.render( this.container );
+	
+};
+
+
+/**
+ * resets the collidables array and fills it with
+ * rects for all sprites which match one of the passed types
+ */
+MapLayer.prototype.setCollidable = function(collidable) {
+	
+	var i, len, tile;
+	
+	this._collidables = [];
+
+	for ( i = 0, len = this.tiles.length; i < len; i++ ) {
+
+		tile = this.tiles[i];
+		
+		if ( collidable.indexOf( tile.type ) < 0 ) { continue; }
+				
+		this._collidables.push( tile );
+		
+	}
+
+};
+
+MapLayer.prototype.getCollidable = function() {
+	
+	return this._collidables;
+	
+};

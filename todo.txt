@@ -1,0 +1,12 @@
+change to opengameart sprites
+enemy collide player
+player health
+bullet collide wall
+bullet impact effect
+enemy impact effect
+enemy corpse
+enemy shoot bullet at player
+tiled importer
+enemy drop stuff
+player collect stuff
+display stuff total
