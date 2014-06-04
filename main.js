@@ -17,19 +17,23 @@ function init(data) {
     document.body.appendChild( stats.domElement );
     
 	// make spritesheets
-	var tileset = makeSpriteSheet( PIXI.TextureCache['assets/tiles.png'], 16, 16 );
-	var shadowTileset = makeSpriteSheet( PIXI.TextureCache['assets/shadow.png'], 16, 16 );
+	//var tileset = makeSpriteSheet( PIXI.TextureCache['assets/tiles.png'], 16, 16 );
+	//var shadowTileset = makeSpriteSheet( PIXI.TextureCache['assets/shadows.png'], 16, 16 );
 
     // make entity groups
     bullets = new Group();
     enemies = new Group();
 
 	// build map
-	floorLayer = new MapLayer(map.layers[0], tileset, 16, 16);
-    wallLayer = new MapLayer(map.layers[1], tileset, 16, 16);
+    var importer = new TiledImporter();
+    mapData = importer.parse( PIXI.JsonCache['assets/map.json'] );
+    
+    floorLayer = mapData.layers[0];
+    shadowLayer = mapData.layers[1];
+    wallLayer = mapData.layers[2];
+	overhangLayer = mapData.layers[3];
+    
     wallLayer.setCollidable([2,3]);
-	rearWallLayer = new MapLayer(map.layers[2], tileset, 16, 16);
-	shadowLayer = new MapLayer(map.layers[3], shadowTileset, 16, 16);
 	shadowLayer.sprite.alpha = 0.1;
 	
     entityLayer = new PIXI.DisplayObjectContainer();
@@ -72,7 +76,7 @@ function init(data) {
 	world.addChild( floorLayer.sprite );
 	world.addChild( shadowLayer.sprite );
 	world.addChild( entityLayer );
-    world.addChild( rearWallLayer.sprite );
+    world.addChild( overhangLayer.sprite );
 	
 	// cursor overlay
 	cursor = PIXI.Sprite.fromImage( 'assets/crosshair.png' );
@@ -83,7 +87,7 @@ function init(data) {
 	
     // enemy spawner (temp)
     setInterval(function(){
-        spawn();
+        //spawn();
     }, 1000);
 
 	// go!

@@ -1,10 +1,10 @@
 /**
  * a single tile map layer
  */
-var MapLayer = function(data, tileset, tileWidth, tileHeight) {
+var MapLayer = function(json, tileset, tileWidth, tileHeight) {
 
-	this.data = data.data;
-	this.width = data.width;
+	this.data = json.data;
+	this.width = json.width;
 	this.height = this.data.length / this.width;
 	this.tileset = tileset;
     this.tileWidth = tileWidth;
@@ -43,6 +43,8 @@ MapLayer.prototype.generateTiles = function() {
 	
 	var x, y, i, type, tile;
 
+    var offset = this.tileset.ixOffset;
+    
 	for ( y = 0; y < this.height; y++ ) {
 		
 		for ( x = 0; x < this.width; x++ ) {
@@ -52,10 +54,10 @@ MapLayer.prototype.generateTiles = function() {
 			
 			// 0 tile is a gap
 			if ( type == 0 ) { continue; }
-			
+            
 			tile = new Tile(
 				type,
-				this.tileset[ type - 1 ], // offset by 1 because tileset starts at 0
+				this.tileset.textures[ type - offset ],
 				x * this.tileWidth,
 				y * this.tileHeight
 			);
