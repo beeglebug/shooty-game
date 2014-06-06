@@ -14,3 +14,18 @@ whiteFilter.matrix = [255,255,255,255,255,255,255,255,255,255,255,255,255,255,25
 
 
 
+function testzone() {
+ 
+    if(rect.width < this.width) {
+        this.lockX = true;
+    }
+    
+    if(rect.height < this.height) {
+        this.lockY = true;   
+    }
+    
+    
+    
+    
+}
+
