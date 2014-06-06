@@ -29,6 +29,12 @@ Camera.prototype.setTarget = function(target) {
 
 };
 
+Camera.prototype.setBounds = function(rect) {
+    
+    this.bounds = rect;
+    
+};
+
 Camera.prototype.update = function(delta) {
 
     if ( this.shaking ) {
@@ -60,9 +66,16 @@ Camera.prototype.update = function(delta) {
     }
     
 	this.position.set(
-		Math.floor( this.target.position.x - this.offset.x + this.shakeOffset.x ),
-		Math.floor( this.target.position.y - this.offset.y + this.shakeOffset.y )
+		Math.floor( this.target.position.x - this.offset.x ),
+		Math.floor( this.target.position.y - this.offset.y )
 	);
+    
+    if(this.bounds) {
+        // keep inside
+        Physics.constrainRectRect(this, this.bounds);
+    }
+
+    this.position.add( this.shakeOffset );
     
 	this.world.position.x = -this.position.x;
 	this.world.position.y = -this.position.y;
