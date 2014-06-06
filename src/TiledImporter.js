@@ -1,14 +1,40 @@
 var TiledImporter = function() {
     
+    PIXI.EventTarget.call(this);
+    
+};
+
+TiledImporter.prototype = Object.create(PIXI.EventTarget.prototype);
+
+TiledImporter.prototype.load = function(url) {
+
+    this.loader = new PIXI.JsonLoader(url);
+    
+    this.loader.addEventListener('loaded', function(evt) {
+        
+        var map = this.parse( evt.content.json );
+        
+        Game.mapCache[map.name] = map;
+        
+        this.dispatchEvent({
+            type : 'complete',
+            content : map
+        });
+        
+    }.bind(this));
+    
+    this.loader.load();
+    
 };
 
 
 TiledImporter.prototype.parse = function(json) {
     
     var map = {
-        
+    
+        name : json.properties.name,
         tilesets : [],
-        layers : []
+        layers : {}
         
     };
     
@@ -29,13 +55,18 @@ TiledImporter.prototype.parse = function(json) {
         var layer = new MapLayer( data, tileset, json.tilewidth, json.tileheight );
         layer.name = data.name;
         
-        if( layer.properties ) {
-            if(layer.properties.collision) {
-                // add collision
+        if( data.properties ) {
+            map.properties = data.properties;
+            if(data.properties.collision) {
+                
+                var collidable = data.properties.collision.split(',');
+                layer.setCollidable( collidable.map(function (x) { 
+                    return +x; // parse int 
+                }));
             }
         }
         
-        map.layers.push( layer );
+        map.layers[layer.name] = layer;
         
     });
 

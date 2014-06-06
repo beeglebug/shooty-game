@@ -1,12 +1,16 @@
 // setup globaL stuff
 var stage = new PIXI.Stage(0xFFFFFF);
-var renderer = PIXI.autoDetectRenderer(320, 320);
+var renderer = PIXI.autoDetectRenderer(384, 256);
 var input = new Input();
 var stats = new Stats();
 var world = new PIXI.DisplayObjectContainer();
 
 // pixelly goodness
 PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
+
+var Game = {
+    mapCache : {}
+};
 
 function init(data) {
 
@@ -15,10 +19,6 @@ function init(data) {
     input.bindKeyboard(document.body);
     input.bindMouse(document.body);
     document.body.appendChild( stats.domElement );
-    
-	// make spritesheets
-	//var tileset = makeSpriteSheet( PIXI.TextureCache['assets/tiles.png'], 16, 16 );
-	//var shadowTileset = makeSpriteSheet( PIXI.TextureCache['assets/shadows.png'], 16, 16 );
 
     // make entity groups
     bullets = new Group();
@@ -26,57 +26,70 @@ function init(data) {
 
 	// build map
     var importer = new TiledImporter();
-    mapData = importer.parse( PIXI.JsonCache['assets/map.json'] );
     
-    floorLayer = mapData.layers[0];
-    shadowLayer = mapData.layers[1];
-    wallLayer = mapData.layers[2];
-	overhangLayer = mapData.layers[3];
+    importer.addEventListener('complete', function(event) {
     
-    wallLayer.setCollidable([2,3]);
-	shadowLayer.sprite.alpha = 0.1;
-	
-    entityLayer = new PIXI.DisplayObjectContainer();
+        var map = event.content;
+    
+        loadMap(map);
+        
+    });
+    
+    importer.load('assets/map.json');
 
-    // move all the wall sprites into the entity layer
-    reparent( wallLayer.container, entityLayer );
+    entityLayer = new PIXI.DisplayObjectContainer();
 
 	// make player
 	player = new Entity();
-	player.sprite = PIXI.Sprite.fromImage( 'assets/player.png' );
-	player.sprite.anchor.set(0, 0.5);
-    player.position.set(160,180);
+	
+    player.sprite = new AnimatedSprite( makeSpriteSheet( PIXI.TextureCache['assets/tiny16.png'], 16, 16) );
+    player.sprite.addAnimation( 'idle', [128] );
+    player.sprite.addAnimation( 'walk', [129,130] );
+    player.sprite.play('idle', 6);
+    player.sprite.anchor.set(0, 0.5);
+    player.position.set(30,100);
 	player.shape = new Rect(16, 8);
 
     entityLayer.addChild( player.sprite );
 
-	player.on( 'PLAYER_COLLIDE_WALL', function( wall, response ) {
+	player.addEventListener( 'PLAYER_COLLIDE_WALL', function( wall, response ) {
 		this.position.add( response.mtd );
         this.shape.position.set( this.position.x, this.position.y );
 	});
 
     
+    enemy = new Enemy(32,32);
+    
     // test animated sprite
-//  animatedSprite = new AnimatedSprite( makeSpriteSheet( PIXI.TextureCache['assets/tiny16.png'], 16, 16) );
-//  animatedSprite.position.set(128,128);
-//  animatedSprite.addAnimation( 'idle', [128] );
-//  animatedSprite.addAnimation( 'walk', [129,130] );
-//  animatedSprite.addAnimation( 'fly', [195,196] );
-//  animatedSprite.addAnimation( 'pot', [52,53,54,55] );
-//  animatedSprite.play('idle');
+    animatedSprite = new AnimatedSprite( makeSpriteSheet( PIXI.TextureCache['assets/tiny16.png'], 16, 16) );
+    animatedSprite.position.set(32,32);
+    animatedSprite.addAnimation( 'fly', [195,196] );
+    animatedSprite.play('fly', 6);
 
+    enemy.sprite = animatedSprite;
+    
+    enemies.add(enemy);
+    
+    entityLayer.addChild(animatedSprite);
+    
 	// make camera
-	camera = new Camera(320, 320, world);
+	camera = new Camera(renderer.width, renderer.height, world);
 	camera.setTarget(player);
 	
 	// build up the game layers
 	stage.addChild( world );
 	stage.addChild( camera.container );
 
-	world.addChild( floorLayer.sprite );
-	world.addChild( shadowLayer.sprite );
+    floorLayer = new PIXI.DisplayObjectContainer();
+    shadowLayer = new PIXI.DisplayObjectContainer();
+    overhangLayer = new PIXI.DisplayObjectContainer();
+    
+    shadowLayer.alpha = 0.1;
+    
+	world.addChild( floorLayer );
+	world.addChild( shadowLayer );
 	world.addChild( entityLayer );
-    world.addChild( overhangLayer.sprite );
+    world.addChild( overhangLayer );
 	
 	// cursor overlay
 	cursor = PIXI.Sprite.fromImage( 'assets/crosshair.png' );
@@ -95,6 +108,8 @@ function init(data) {
 
 }
 
+var walls = [];
+
 running = true;
 
 var lastUpdate = Date.now();
@@ -112,8 +127,7 @@ function loop() {
 	stats.begin();
 	
     // for the physics stuff
-	var walls = wallLayer.getCollidable();
-    
+	
     // player updates
 	handleInput();
     player.update();
@@ -128,7 +142,6 @@ function loop() {
     // enemy updates
     enemies.forEach(function(enemy) {
         
-        enemy.doAI();
         enemy.update(delta);
        
         // @todo sort walls by distance to enemy?
@@ -153,7 +166,9 @@ function loop() {
 
 	camera.update(delta);
 	UI.update();	
-	
+
+    AnimationManager.update(delta);
+    
     // z sort the middle layer
     entityLayer.children.sort(sortByDepth);
 
@@ -168,8 +183,10 @@ function die() { running = false; }
 
 function shoot() {
     
-    var bullet = new Bullet( player.shape.center, input.mouse.worldPosition, 2 );
+    var bullet = new Bullet( player.shape.center, input.mouse.worldPosition, 4 );
 	
+    camera.shake(2, 50);
+    
 	bullets.add(bullet);
 	
 	entityLayer.addChild( bullet.sprite );
@@ -189,6 +206,56 @@ function spawn() {
     
 }
 
+
+function test() {
+
+    var importer = new TiledImporter();
+    
+    importer.addEventListener('complete', function(event) {
+    
+        var map = event.content;
+
+        unloadMap();
+        
+        loadMap(map);
+        
+        entityLayer.addChild( player.sprite );
+        
+    });
+    
+    importer.load('assets/map2.json');
+    
+}
+    
+
+function unloadMap() {
+    
+    floorLayer.removeAll();
+    shadowLayer.removeAll();
+    
+    walls = [];
+    entityLayer.removeAll();
+    
+    overhangLayer.removeAll();    
+}
+
+function loadMap(map) {
+ 
+    Game.map = map;
+    
+    floorLayer.addChild( map.layers.floor.sprite );
+    shadowLayer.addChild( map.layers.shadows.sprite );
+    walls = map.layers.walls;
+    overhangLayer.addChild( map.layers.overhang.sprite );
+
+    // move all the wall sprites into the entity layer
+    reparent( walls.container, entityLayer );
+        
+    walls = walls.getCollidable();
+    
+    camera.setBounds( map.layers.floor.shape )
+    
+}
 
 
 
