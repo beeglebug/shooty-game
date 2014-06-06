@@ -8,14 +8,12 @@ var Enemy = function( x, y ) {
     this.position.set( x, y )
 	this.shape = new Rect(16, 8);
     
-    this.on( 'BULLET_COLLIDE_ENEMY', function( bullet, response ) {
+    this.addEventListener( 'BULLET_COLLIDE_ENEMY', function( bullet, response ) {
         
         // @todo stun for a second
         this.mobile = false;
         
         this.position.add( bullet.velocity );
-	
-        camera.shake(3,200);
         
         flashSpriteWhite( this.sprite, 100, function() {
 
@@ -26,7 +24,7 @@ var Enemy = function( x, y ) {
         
 	});
 
-    this.on( 'ENEMY_COLLIDE_WALL', function( wall, response ) {
+    this.addEventListener( 'ENEMY_COLLIDE_WALL', function( wall, response ) {
 
         this.position.add( response.mtd );
         this.shape.position.set( this.position.x, this.position.y );
@@ -38,12 +36,7 @@ var Enemy = function( x, y ) {
 Enemy.prototype = Object.create(Entity.prototype);
 
 
-Enemy.prototype.doAI = function() {
-     
-    AI.behaviours.moveTowardsTarget.call(this, player);
-    //AI.behaviours.stayAtDistanceFromTarget.call(this, player, 50);
-        
-};
+
 
 
 // @todo possibly move to Entity?

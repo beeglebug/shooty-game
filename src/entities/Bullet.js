@@ -16,10 +16,46 @@ var Bullet = function( position, target, speed ) {
 	
 	this.sprite.rotation = this.velocity.toRadians();
 	
-    this.on('BULLET_COLLIDE_ENEMY', function( enemy, response ) {
+    this.addEventListener('BULLET_COLLIDE_ENEMY', function( enemy, response ) {
     
         this.die();
 
+        var pop = new AnimatedSprite( makeSpriteSheet( PIXI.TextureCache['assets/bullet-hit.png'], 16, 16) );
+        pop.addAnimation( 'pop', [0,1,2,3] );
+        pop.anchor.set(0.5,0.5)
+    
+        entityLayer.addChild(pop);
+        
+        pop.position.set(this.position.x, this.position.y);
+        
+        pop.visible = true;
+        
+        pop.playOnce('pop', 24, function() {
+            pop.visible = false;
+            entityLayer.removeChild(pop);
+        });
+        
+    });
+    
+    this.addEventListener('BULLET_COLLIDE_WALL', function( enemy, response ) {
+    
+        this.die();
+
+        var pop = new AnimatedSprite( makeSpriteSheet( PIXI.TextureCache['assets/bullet-hit.png'], 16, 16) );
+        pop.addAnimation( 'pop', [0,1,2,3] );
+        pop.anchor.set(0.5,0.5)
+    
+        entityLayer.addChild(pop);
+        
+        pop.position.set(this.position.x, this.position.y);
+        
+        pop.visible = true;
+        
+        pop.playOnce('pop', 24, function() {
+            pop.visible = false;
+            entityLayer.removeChild(pop);
+        });
+        
     });
         
 };

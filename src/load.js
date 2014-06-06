@@ -7,6 +7,7 @@ var assets = [
 	'assets/player-shadow.png',
 	'assets/enemy.png',
     'assets/tiny16.png',
+    'assets/bullet-hit.png',
     'assets/map.json'
 ];
 

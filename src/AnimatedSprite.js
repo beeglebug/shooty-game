@@ -9,6 +9,8 @@ var AnimatedSprite = function( spritesheet ) {
     // use first frame for now
     PIXI.Sprite.call( this, this.spritesheet[this.frameNumber] );
 
+    AnimationManager.register(this);
+    
 };
 
 AnimatedSprite.prototype = Object.create(PIXI.Sprite.prototype);
@@ -34,6 +36,9 @@ AnimatedSprite.prototype.update = function(delta) {
             if(this.loop) {
                 this.frameNumber = 0;
             } else {
+                if(this.callback) {
+                    this.callback();
+                }
                 this.frameNumber = this.currentAnimation.length - 1;
                 this.playing = false;
             }
@@ -52,28 +57,72 @@ AnimatedSprite.prototype.update = function(delta) {
 
 AnimatedSprite.prototype.play = function(animation, fps) {
   
-    this._playAnimation( animation, fps, true );
+    this.loop = true;
+    this._playAnimation( animation, fps );
     
 };
 
 
-AnimatedSprite.prototype.playOnce = function(animation, fps) {
+AnimatedSprite.prototype.playOnce = function(animation, fps, callback) {
   
-    this._playAnimation( animation, fps, false );
+    this.callback = callback;
+    this.loop = false;
+    this._playAnimation( animation, fps );
     
 };
 
-AnimatedSprite.prototype._playAnimation = function( animation, fps, loop ) {
+AnimatedSprite.prototype._playAnimation = function( animation, fps ) {
 
     if(fps) { this.fps = fps; }
     
     this.currentAnimation = this.animations[animation];    
     this.frameNumber = 0;
-    this.loop = loop;
     this.playing = true;
     
     this.frame = this.spritesheet[ this.currentAnimation[this.frameNumber] ];
     this.setTexture(this.frame);
     
 };
+
+
+
+
+
+
+
+
+
+var AnimationManager = {
+ 
+    sprites : [],
+    
+    register : function(sprite) {
+    
+        this.sprites.push(sprite);
+    
+    },
+    
+    update : function(delta) {
+     
+        this.sprites.forEach(function(sprite) {
+           
+            sprite.update(delta);
+            
+        });
+        
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
