@@ -1,12 +1,23 @@
-change to opengameart sprites
 enemy collide player
 player health
-bullet collide wall
-bullet impact effect
-enemy impact effect
 enemy corpse
-enemy shoot bullet at player
-tiled importer
+enemy shoot at player
+more enemy behaviours
 enemy drop stuff
 player collect stuff
 display stuff total
+
+refactor to use pixi eventtarget
+allow smaller maps without padding
+restructure heirarchy to keep an entire room under one parent
+load multiple rooms
+transition between rooms
+tiled entity layer
+trigger entities
+dispatch event on collision
+event comes from tiled properties
+
+proceduraly generated ships
+ship consists of modules
+ship types
+list of ships choose one to investigate
