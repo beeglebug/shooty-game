@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="24" height="16" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="name" value="map1"/>
+ </properties>
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16">
   <image source="tiles.png" width="16" height="64"/>
  </tileset>
  <tileset firstgid="5" name="shadows" tilewidth="16" tileheight="16">
   <image source="shadows.png" width="64" height="16"/>
  </tileset>
- <layer name="floor" width="24" height="16" visible="0">
+ <layer name="floor" width="24" height="16">
   <data encoding="base64" compression="zlib">
    eJxjYWBgYBnFo3gUj+JRPOIwABMOBgE=
   </data>
  </layer>
  <layer name="shadows" width="24" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYKA9YAViNhpgGGCnsfuJNZ9cd4wU84eSeliaReeDMAcF5qObQa6ZuMynBRg1f2DNpyUAADPXAU4=
+   eJxjYKA9YAViNipgdLNggJ2KbsVmFrHmE6NuJJtPSD0oTjkYKI9faqiHpTN0PsyN5JqPbgapZlIj/OlpPnp8DhX34yqDsMUTNd1PbwAAWT4B2Q==
   </data>
  </layer>
- <layer name="walls" width="24" height="16" visible="0">
+ <layer name="walls" width="24" height="16">
   <properties>
-   <property name="collision" value="true"/>
+   <property name="collision" value="2,3"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYKYRZoJiWoHBYj657hgI85nwYFqbT6o9+MxHT2PI6Y4S89HNINVMQuZTE4yaPzLMpyUGAFqhAPo=
+   eJzN1EEKACAIBEDR//85uomkJq3VgkQQQ6TERCSg4sV+FirW+sWvnHvtc1BZRK1efyO/2q/It3fQc3fiW6NqZv5JuuZfvyXK93qH8r0/COXv5JbfWQPRzQEs
   </data>
  </layer>
- <layer name="overhang" width="24" height="16" visible="0">
+ <layer name="overhang" width="24" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYBj+gBGKhwJgxILpbfcoGAWjgHiALc9SA9MDAAA6rAAg
+   eJxjYBj+gBGKhwJgxILJNYNe+kYBBNAq7GgRL/SKa0rS8VAB2PIsNTA9AABTSAAq
   </data>
  </layer>
 </map>
