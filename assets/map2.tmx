@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="16" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="name" value="map2"/>
+ </properties>
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16">
+  <image source="tiles.png" width="16" height="64"/>
+ </tileset>
+ <tileset firstgid="5" name="shadows" tilewidth="16" tileheight="16">
+  <image source="shadows.png" width="64" height="16"/>
+ </tileset>
+ <layer name="floor" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYKA9YKERHjV/1PxR80fNH+7m0xIAAIByBNE=
+  </data>
+ </layer>
+ <layer name="shadows" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgegBWI2aiI0QE7bZ1PsfmE9OOSJybcKDGfWH+NVPM5aGw+sWrIMR89nXAQKUeO/ZQCWps/VAEAgH8Bjw==
+  </data>
+ </layer>
+ <layer name="walls" width="24" height="16">
+  <properties>
+   <property name="collision" value="2,3"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYKA9YAJiZipjJjTzaeHmgTaf2HDDpp9Y80l166j5Q8d89HRCrByx5lMChpv5tMD0AAADFQDo
+  </data>
+ </layer>
+ <layer name="overhang" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF5AJGEvAoGAXYAK40Mpp2qAdIyacjLU8DAFz8ACg=
+  </data>
+ </layer>
+</map>
