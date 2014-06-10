@@ -1,3 +1,6 @@
+scale entire game x2
+get camera working with scale
+get input working with scale
 bullet collide wall
 bullet impact effect - simple sprite animation
 single screen maps

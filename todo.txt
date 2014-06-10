@@ -1,23 +1,19 @@
+enemy shoot at player
+gun cooldowns
+only shoot when in range of player
+enemy move towards player
+only move if inside range
 enemy collide player
 player health
 enemy corpse
-enemy shoot at player
-more enemy behaviours
 enemy drop stuff
 player collect stuff
 display stuff total
-
-refactor to use pixi eventtarget
-allow smaller maps without padding
-restructure heirarchy to keep an entire room under one parent
-load multiple rooms
-transition between rooms
 tiled entity layer
 trigger entities
 dispatch event on collision
 event comes from tiled properties
-
-proceduraly generated ships
-ship consists of modules
-ship types
-list of ships choose one to investigate
+static enemy shoots at player (deku plant)
+passive mobs just walk about
+shields need energy weapons
+multiple weaponsweapon switch
