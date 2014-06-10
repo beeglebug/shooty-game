@@ -2,7 +2,7 @@ var Enemy = function( x, y ) {
   
     Entity.call(this);
 
-    this.sprite = PIXI.Sprite.fromImage( 'assets/enemy.png' );
+    this.sprite = PIXI.Sprite.fromImage( 'assets/pod.png' );
 	this.sprite.anchor.set(0, 0.5);
     
     this.position.set( x, y )
