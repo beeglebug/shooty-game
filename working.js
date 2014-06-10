@@ -29,3 +29,48 @@ function testzone() {
     
 }
 
+
+function aaaiii(entity) {
+
+    // choose highest priority target
+    // for now will just get the player every time
+    // if i add multiple factions it may get expanded
+    // @todo expand
+    var possibleTargets = getTargetsInRange(entity);
+
+    if(possibleTargets.length > 0) {
+    
+        var target = possibleTargets[0];
+    
+        for( var i = 1; i < possibleTargets.length; i++) {
+            // compare to current target and decide if more important
+        }
+    
+        setTarget(entity, target);
+    }
+    
+};
+
+function getTargetsInRange(entity) {
+
+    // @todo get all possible targets properly
+    var possible = [player];
+    
+    var targets = [];
+    
+    var detectionRange = 20;
+    
+    for( var i = 0; i < possible.length; i++)
+    {    
+        if( entity.position.distanceTo( possible[i].position ) < detectionRange ) {
+            targets.push( possible[i] );
+        }
+    }
+    
+    return targets;
+};
+
+function setTarget(entity, target) {
+    
+    console.log(target);
+}
