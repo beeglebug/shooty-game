@@ -1,6 +1,8 @@
 // setup globaL stuff
-var stage = new PIXI.Stage(0xFFFFFF);
-var renderer = PIXI.autoDetectRenderer(384, 256);
+var width = 800;
+var height = 450;
+var stage = new PIXI.Stage(0x0000000);
+var renderer = PIXI.autoDetectRenderer( width, height );
 var input = new Input();
 var stats = new Stats();
 var world = new PIXI.DisplayObjectContainer();
@@ -16,7 +18,7 @@ var Game = {
 function init(data) {
 
     // dom binding
-    document.body.appendChild(renderer.view);
+    document.querySelector('.canvas-container').appendChild(renderer.view);
     input.bindKeyboard(document.body);
     input.bindMouse(document.body);
     document.body.appendChild( stats.domElement );
