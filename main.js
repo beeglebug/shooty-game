@@ -9,7 +9,8 @@ var world = new PIXI.DisplayObjectContainer();
 PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
 
 var Game = {
-    mapCache : {}
+    mapCache : {},
+    scale : 1,
 };
 
 function init(data) {
@@ -19,11 +20,12 @@ function init(data) {
     input.bindKeyboard(document.body);
     input.bindMouse(document.body);
     document.body.appendChild( stats.domElement );
-
+    
     // make entity groups
     bullets = new Group();
     enemies = new Group();
 
+    
 	// build map
     var importer = new TiledImporter();
     
@@ -70,12 +72,15 @@ function init(data) {
     
     enemies.add(enemy);
     
-    entityLayer.addChild(animatedSprite);
+    entityLayer.addChild(enemy.sprite);
+    
+    world.scale.set(Game.scale, Game.scale);
     
 	// make camera
 	camera = new Camera(renderer.width, renderer.height, world);
 	camera.setTarget(player);
-	
+
+    
 	// build up the game layers
 	stage.addChild( world );
 	stage.addChild( camera.container );
@@ -103,6 +108,8 @@ function init(data) {
         //spawn();
     }, 1000);
 
+    setScale(2);
+    
 	// go!
 	loop();
 
@@ -257,5 +264,15 @@ function loadMap(map) {
     
 }
 
+function setScale(scale) {
+ 
+    Game.scale = scale;
+    world.scale.set(scale, scale);
+    camera.container.scale.set(scale, scale);
+    
+    //camera.scaleCenter(1/scale);
+    camera.setTarget(camera.target);
+
+}
 
 

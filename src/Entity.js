@@ -38,10 +38,9 @@ Entity.prototype.update = function() {
 // sync shape and sprite
 Entity.prototype._beforeRender = function() {
 
-	// use integer numbers to avoid tearing / blurring
 	this.sprite.position.set(
-		Math.floor( this.shape.position.x ),
-		Math.floor( this.shape.position.y )
+		this.shape.position.x ,
+		this.shape.position.y
 	);
 	
 };

@@ -22,6 +22,7 @@ Camera.prototype = Object.create(Rect.prototype);
 Camera.prototype.setTarget = function(target) {
 	
 	this.target = target;
+    
 	this.offset.set(
 		( this.width / 2 ) - ( target.shape.width / 2 ),
 		( this.height / 2 ) - ( target.shape.height / 2 )
@@ -66,13 +67,13 @@ Camera.prototype.update = function(delta) {
     }
     
 	this.position.set(
-		Math.floor( this.target.position.x - this.offset.x ),
-		Math.floor( this.target.position.y - this.offset.y )
+		Math.floor( this.target.position.x * Game.scale - this.offset.x ),
+		Math.floor( this.target.position.y * Game.scale - this.offset.y )
 	);
     
     if(this.bounds) {
         // keep inside
-        Physics.constrainRectRect(this, this.bounds);
+        //Physics.constrainRectRect(this, this.bounds);
     }
 
     this.position.add( this.shakeOffset );
