@@ -20,7 +20,10 @@ function handleInput() {
 		player.velocity.x += speed;
 	}
 	
+    if(input.isDown(Input.MOUSE_DOWN_LEFT)) {
+        shoot();
+    }
+    
 }
 
-input.on( Input.MOUSE_DOWN_LEFT, shoot );
 input.mouse.worldPosition = new Vector2();
