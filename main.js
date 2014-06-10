@@ -44,10 +44,7 @@ function init(data) {
 	// make player
 	player = new Entity();
 	
-    player.sprite = new AnimatedSprite( makeSpriteSheet( PIXI.TextureCache['assets/tiny16.png'], 16, 16) );
-    player.sprite.addAnimation( 'idle', [128] );
-    player.sprite.addAnimation( 'walk', [129,130] );
-    player.sprite.play('idle', 6);
+    player.sprite = new PIXI.Sprite( PIXI.TextureCache['assets/player.png'] );
     player.sprite.anchor.set(0, 0.5);
     player.position.set(30,100);
 	player.shape = new Rect(16, 8);
@@ -61,14 +58,7 @@ function init(data) {
 
     
     enemy = new Enemy(32,32);
-    
-    // test animated sprite
-    animatedSprite = new AnimatedSprite( makeSpriteSheet( PIXI.TextureCache['assets/tiny16.png'], 16, 16) );
-    animatedSprite.position.set(32,32);
-    animatedSprite.addAnimation( 'fly', [195,196] );
-    animatedSprite.play('fly', 6);
-
-    enemy.sprite = animatedSprite;
+    enemy.sprite = new PIXI.Sprite( PIXI.TextureCache['assets/pod.png'] );
     
     enemies.add(enemy);
     
@@ -192,7 +182,7 @@ function shoot() {
     
     var bullet = new Bullet( player.shape.center, input.mouse.worldPosition, 4 );
 	
-    camera.shake(2, 50);
+    //camera.shake(2, 50);
     
 	bullets.add(bullet);
 	
