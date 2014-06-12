@@ -12,7 +12,7 @@ PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
 
 var Game = {
     mapCache : {},
-    scale : 2.5,
+    scale : 3,
 };
 
 function init(data) {

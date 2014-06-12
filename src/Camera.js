@@ -67,8 +67,8 @@ Camera.prototype.update = function(delta) {
     }
     
 	this.position.set(
-		Math.floor( this.target.position.x * Game.scale - this.offset.x ),
-		Math.floor( this.target.position.y * Game.scale - this.offset.y )
+		this.target.position.x * Game.scale - this.offset.x,
+		this.target.position.y * Game.scale - this.offset.y
 	);
     
     if(this.bounds) {
