@@ -5,11 +5,8 @@ var assets = [
 	'assets/crosshair.png',
 	'assets/shadows.png',
 	'assets/player-shadow.png',
-    'assets/tiny16.png',
     'assets/bullet-hit.png',
-    'assets/pod.png',
-    'assets/bug.png',
-    'assets/plant.png',
+    'assets/enemy.png',
     'assets/map.json'
 ];
 
