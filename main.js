@@ -164,7 +164,7 @@ function loop() {
 		
 		Physics.collideRects( bullet, walls, 'BULLET_COLLIDE_WALL' );
 		
-        Physics.collideRects( bullet, enemies.all(), 'BULLET_COLLIDE_ENEMY' );
+        Physics.collideRects( bullet, enemies.all(), 'BULLET_COLLIDE_ENEMY', true );
 
         bullet._beforeRender();
         

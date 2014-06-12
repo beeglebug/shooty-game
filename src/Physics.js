@@ -39,11 +39,11 @@ Physics.constrainRectRect = function( rect1, rect2 ) {
 };
 
 
-Physics.collideRects = function( entity, entities, event ) {
+Physics.collideRects = function( entity, entities, event, stop ) {
 
 	var i, len, collision,
 		response = new CollisionResponse();
-	
+    
 	for ( i = 0, len = entities.length; i < len; i++ ) {
 	
 		collision = Collision.rectRect( entity.shape, entities[i].shape, response );
@@ -54,6 +54,7 @@ Physics.collideRects = function( entity, entities, event ) {
 			entity.emit( event, entities[i], response );
 			entities[i].emit( event, entity, response );
 
+            if(stop) { return; }
 		}
 		
 	}
