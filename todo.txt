@@ -1,16 +1,12 @@
-debug layer
-draw collision shapes
-enemy corpse
-player health
 enemy shoot at player
 enemy drop stuff
+corpses
 player collect stuff
 display stuff total
 tiled entity layer
 trigger entities
-dispatch event on collision
 event comes from tiled properties
-static enemy shoots at player (deku plant)
+static enemy shoots at player
 passive mobs just walk about
 shields need energy weapons
 multiple weapons
