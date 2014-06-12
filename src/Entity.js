@@ -42,7 +42,7 @@ Entity.prototype.updateShape = function() {
 Entity.prototype._beforeRender = function() {
 
 	this.sprite.position.set(
-		this.shape.position.x ,
+		this.shape.position.x,
 		this.shape.position.y
 	);
 	
