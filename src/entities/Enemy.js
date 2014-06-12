@@ -2,25 +2,32 @@ var Enemy = function( x, y ) {
   
     Entity.call(this);
 
-    this.sprite = PIXI.Sprite.fromImage( 'assets/pod.png' );
+    this.sprite = PIXI.Sprite.fromImage( 'assets/enemy.png' );
 	this.sprite.anchor.set(0, 0.5);
     
     this.position.set( x, y )
-	this.shape = new Rect(16, 8);
+	this.shape = new Rect(16, 16);
+    
+    this.health = 50;
     
     this.addEventListener( 'BULLET_COLLIDE_ENEMY', function( bullet, response ) {
         
-        // @todo stun for a second
-        this.mobile = false;
+        this.stun(100);
         
         this.position.add( bullet.velocity );
         
-        flashSpriteWhite( this.sprite, 100, function() {
+        this.health -= bullet.damage;
+        
+        if(this.health <= 0) {
+        
+            flashSpriteWhite( this.sprite, 100, function() {
 
-            // die
-            this.die();
-            
-        }.bind(this) );
+                // die
+                this.die();
+
+            }.bind(this) );
+        
+        }
         
 	});
 
@@ -36,7 +43,15 @@ var Enemy = function( x, y ) {
 Enemy.prototype = Object.create(Entity.prototype);
 
 
-
+Enemy.prototype.stun = function(duration) {
+  
+    this.mobile = false;
+    
+    setTimeout(function(){
+        this.mobile = true;
+    }.bind(this), duration);
+    
+};
 
 
 // @todo possibly move to Entity?

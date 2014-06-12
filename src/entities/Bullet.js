@@ -9,6 +9,8 @@ var Bullet = function( position, target, speed ) {
     
     this.shape = new Rect( 4, 4 );
     
+    this.damage = 10;
+    
     // @todo dont waste an object
     this.velocity = target._subtract( position )
 	                           .normalize()
