@@ -60,14 +60,21 @@ function init(data) {
 
     
     enemy = new Enemy(32,32);
-    enemy.sprite = new PIXI.Sprite( PIXI.TextureCache['assets/pod.png'] );
-    
     enemies.add(enemy);
-    
     entityLayer.addChild(enemy.sprite);
     
-    world.scale.set(Game.scale, Game.scale);
+    enemy = new Enemy(64,32);
+    enemies.add(enemy);
+    entityLayer.addChild(enemy.sprite);
     
+    enemy = new Enemy(96,32);
+    enemies.add(enemy);
+    entityLayer.addChild(enemy.sprite);
+    
+    enemy = new Enemy(128,32);
+    enemies.add(enemy);
+    entityLayer.addChild(enemy.sprite);
+
 	// make camera
 	camera = new Camera(renderer.width, renderer.height, world);
 	camera.setTarget(player);
