@@ -1,3 +1,4 @@
+enemy collide player
 wobbly when moving diagonally
 stop bullets killing multiple enemies
 only move if inside range

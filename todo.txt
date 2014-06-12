@@ -1,4 +1,5 @@
-enemy collide player
+debug layer
+draw collision shapes
 enemy corpse
 player health
 enemy shoot at player
