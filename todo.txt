@@ -1,11 +1,7 @@
-enemy shoot at player
-gun cooldowns
-only shoot when in range of player
-enemy move towards player
-only move if inside range
 enemy collide player
-player health
 enemy corpse
+player health
+enemy shoot at player
 enemy drop stuff
 player collect stuff
 display stuff total
@@ -16,4 +12,5 @@ event comes from tiled properties
 static enemy shoots at player (deku plant)
 passive mobs just walk about
 shields need energy weapons
-multiple weaponsweapon switch
+multiple weapons
+weapon switch

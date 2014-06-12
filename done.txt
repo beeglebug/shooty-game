@@ -1,3 +1,8 @@
+wobbly when moving diagonally
+stop bullets killing multiple enemies
+only move if inside range
+enemy move towards player
+gun cooldowns
 scale entire game x2
 get camera working with scale
 get input working with scale
@@ -7,7 +12,6 @@ single screen maps
 scrollable maps
 tiled importer
 camera shake
-enemy stay set distance from player
 enemy die
 enemy spawn
 enemy collide walls
@@ -39,7 +43,3 @@ scroll map
 large map
 map load
 test sprite
-
-
-// used resources
-http://opengameart.org/content/tiny-16-basic
