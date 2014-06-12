@@ -12,7 +12,7 @@ PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
 
 var Game = {
     mapCache : {},
-    scale : 1,
+    scale : 2.5,
 };
 
 function init(data) {
@@ -48,7 +48,7 @@ function init(data) {
 	
     player.sprite = new PIXI.Sprite( PIXI.TextureCache['assets/player.png'] );
     player.sprite.anchor.set(0, 0.5);
-    player.position.set(30,100);
+    player.position.set(37,187);
 	player.shape = new Rect(16, 8);
 
     entityLayer.addChild( player.sprite );
@@ -100,7 +100,7 @@ function init(data) {
         //spawn();
     }, 1000);
 
-    setScale(2);
+    setScale(Game.scale);
     
 	// go!
 	loop();
