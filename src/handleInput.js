@@ -22,6 +22,9 @@ function handleInput() {
 	
     if(input.isDown(Input.MOUSE_DOWN_LEFT)) {
         shoot();
+    } else {
+        lastShoot = null;
+        shootAccumulator = 0;
     }
     
 }

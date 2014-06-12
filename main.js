@@ -148,6 +148,8 @@ function loop() {
     // enemy updates
     enemies.forEach(function(enemy) {
         
+        aaaiii(enemy);
+        
         enemy.update(delta);
        
         // @todo sort walls by distance to enemy?
@@ -187,15 +189,36 @@ function loop() {
 function die() { running = false; }
 
 
+var lastShoot;
+var shootAccumulator = 0;
+
 function shoot() {
+
+    var now = +new Date();
+    var fireRate = 1000 / 5;
+
+    if(!lastShoot) {
+        // first shot of a burst
+        lastShoot = now - fireRate; // so delta == fireRate
+    }
     
-    var bullet = new Bullet( player.shape.center, input.mouse.worldPosition, 4 );
-	
-    //camera.shake(2, 50);
+    var delta = now - lastShoot;
     
-	bullets.add(bullet);
-	
-	entityLayer.addChild( bullet.sprite );
+    shootAccumulator += delta;
+    
+    while(shootAccumulator > fireRate) {
+
+        shootAccumulator -= fireRate;
+        
+        var bullet = new Bullet( player.shape.center, input.mouse.worldPosition, 4 );    
+        
+        bullets.add(bullet);
+        
+        entityLayer.addChild( bullet.sprite );
+     
+    }
+    
+    lastShoot = now;
 
 }
 
