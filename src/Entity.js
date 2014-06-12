@@ -17,16 +17,19 @@ Entity.prototype = Object.create(EventEmitter.prototype);
 Entity.prototype.update = function() {
 
     if(this.mobile) {
-    
+        
 	   this.position.add( this.velocity );
 
         if(this.shape) {
-     
-            this.shape.position.set( this.position.x, this.position.y );
-        
+            this.updateShape()
         }
         
-    }
+    }    
+};
+
+Entity.prototype.updateShape = function() {
+    
+    this.shape.position.set( this.position.x, this.position.y );
     
 };
 

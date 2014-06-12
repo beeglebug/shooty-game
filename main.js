@@ -55,7 +55,14 @@ function init(data) {
 
 	player.addEventListener( 'PLAYER_COLLIDE_WALL', function( wall, response ) {
 		this.position.add( response.mtd );
-        this.shape.position.set( this.position.x, this.position.y );
+        this.updateShape();
+	});
+    
+    player.addEventListener( 'ENEMY_COLLIDE_PLAYER', function( enemy, response ) {
+		
+        enemy.position.add( response.mtd );
+        enemy.updateShape();
+        
 	});
 
     
@@ -155,6 +162,8 @@ function loop() {
         // @todo sort walls by distance to enemy?
         
         Physics.collideRects( enemy, walls, 'ENEMY_COLLIDE_WALL' );
+        
+        Physics.collideRects( enemy, [player], 'ENEMY_COLLIDE_PLAYER' );
 	
         enemy._beforeRender();
     });
