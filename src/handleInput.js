@@ -2,24 +2,26 @@ function handleInput() {
 	
     player.velocity.zero();
     
-	var speed = 1.5;
+	var speed = 2;
 	
 	if(input.isDown(Input.KEY_W)) {
-		player.velocity.y -= speed;
+		player.velocity.y -= 1;
 	}
 	
 	if(input.isDown(Input.KEY_A)) {	
-		player.velocity.x -= speed;
+		player.velocity.x -= 1;
 	}
 	
 	if(input.isDown(Input.KEY_S)) {	
-		player.velocity.y += speed;
+		player.velocity.y += 1;
 	}
 
 	if(input.isDown(Input.KEY_D)) {	
-		player.velocity.x += speed;
+		player.velocity.x += 1;
 	}
 	
+    player.velocity.normalise().multiply(speed);
+    
     if(input.isDown(Input.MOUSE_DOWN_LEFT)) {
         shoot();
     } else {
