@@ -47,9 +47,9 @@ function init(data) {
 	player = new Entity();
 	
     player.sprite = new PIXI.Sprite( PIXI.TextureCache['assets/player.png'] );
-    player.sprite.anchor.set(0, 0.5);
+    player.sprite.anchor.set(0.25, 0.5);
     player.position.set(37,187);
-	player.shape = new Rect(16, 8);
+	player.shape = new Rect(8, 8);
 
     entityLayer.addChild( player.sprite );
 
