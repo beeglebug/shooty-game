@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="24" height="16" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" width="24" height="32" tilewidth="16" tileheight="16">
  <properties>
   <property name="name" value="map1"/>
  </properties>
@@ -9,27 +9,27 @@
  <tileset firstgid="5" name="shadows" tilewidth="16" tileheight="16">
   <image source="shadows.png" width="64" height="16"/>
  </tileset>
- <layer name="floor" width="24" height="16">
+ <layer name="floor" width="24" height="32" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYWBgYBnFo3gUj+JRPOIwABMOBgE=
+   eJxjYWBgYBnFo3gUj+JRPIpH8SgexQOO8QFqmU9r94+aP/jNBwDL2QvN
   </data>
  </layer>
- <layer name="shadows" width="24" height="16">
+ <layer name="shadows" width="24" height="32" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYKA9YAViNipgdLNggJ2KbsVmFrHmE6NuJJtPSD0oTjkYKI9faqiHpTN0PsyN5JqPbgapZlIj/OlpPnp8DhX34yqDsMUTNd1PbwAAWT4B2Q==
+   eJzllt0OgCAIhb0pe/8nLi/cGBMFD2Q/Z/Oigm/HICyleG3X2h0WZ1VlR68tlpavifszfxRfanokvL4e8bXP+HX1OMvnDCvT4/3fyS+5tJ5v8S/NoFadPL+vljTzE+FLefz+Sv7Ms6/zR32J8rWK7n86Q3r/Bda5bPGFnCmjXPRMWe2/FyPNLrpfhO+19yfzI3UCnWgD0g==
   </data>
  </layer>
- <layer name="walls" width="24" height="16">
+ <layer name="walls" width="24" height="32">
   <properties>
    <property name="collision" value="2,3"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzN1EEKACAIBEDR//85uomkJq3VgkQQQ6TERCSg4sV+FirW+sWvnHvtc1BZRK1efyO/2q/It3fQc3fiW6NqZv5JuuZfvyXK93qH8r0/COXv5JbfWQPRzQEs
+   eJztluEKgDAIhGV7/3eO/smYnrqr/JEgMdCP2rlrQ0QmKcdmfScrVlYXfqbua/5wEsVUT0tfj5/Vy+Ov76Dn7oS/MrJMxD+Jp+Zf7yWLb2nH4lsexOJHYjd7njdW+dFaJh9p9wYfeUZ3PvKk7vuf4UfuBSd8VFeJ7H9P90XOetV/UE+Wb2ntfQeLj/p+vt9XvYtLsO4CSbcCOQ==
   </data>
  </layer>
- <layer name="overhang" width="24" height="16">
+ <layer name="overhang" width="24" height="32" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYBj+gBGKhwJgxILJNYNe+kYBBNAq7GgRL/SKa0rS8VAB2PIsNTA9AABTSAAq
+   eJxjYBj+gBGKhwJgxILJNYNe+kYBBNAq7GgRL/SKa0rSMS3cgA8PJTAY3DtUw24kAmxpfbjG31DL67jcMxTcPgqIS2u44m+g0ygAb+sASw==
   </data>
  </layer>
 </map>
