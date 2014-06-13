@@ -43,6 +43,8 @@ function init(data) {
 
     entityLayer = new PIXI.DisplayObjectContainer();
 
+    debugLayer = new PIXI.Graphics();
+    
 	// make player
 	player = new Entity();
 	
@@ -101,7 +103,8 @@ function init(data) {
 	world.addChild( shadowLayer );
 	world.addChild( entityLayer );
     world.addChild( overhangLayer );
-	
+	world.addChild( debugLayer );
+    
 	// cursor overlay
 	cursor = PIXI.Sprite.fromImage( 'assets/crosshair.png' );
 	cursor.anchor.set( 0.5, 0.5 );
@@ -191,6 +194,8 @@ function loop() {
 
 	renderer.render(stage);
 
+    renderDebug();
+    
 	stats.end();
 
 }
@@ -305,5 +310,29 @@ function setScale(scale) {
     camera.setTarget(camera.target);
 
 }
+
+
+function renderDebug() {
+    
+    var gfx = debugLayer;
+    
+    gfx.clear();
+    
+    gfx.lineStyle(1, 0xFF0000);
+    
+    enemies.forEach(function(enemy) {
+       
+        gfx.drawRect( enemy.shape.position.x, enemy.shape.position.y, enemy.shape.width, enemy.shape.height );    
+        
+    });
+    
+    gfx.lineStyle(1, 0x00FF00);
+    
+    gfx.drawRect( player.shape.position.x, player.shape.position.y, player.shape.width, player.shape.height );
+    
+}
+
+
+
 
 
