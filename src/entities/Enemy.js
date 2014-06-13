@@ -6,7 +6,7 @@ var Enemy = function( x, y ) {
 	this.sprite.anchor.set(0, 0.5);
     
     this.position.set( x, y )
-	this.shape = new Rect(16, 16);
+	this.shape = new Rect(16, 8);
     
     this.health = 50;
     
