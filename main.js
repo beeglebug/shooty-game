@@ -192,9 +192,10 @@ function loop() {
     // z sort the middle layer
     entityLayer.children.sort(sortByDepth);
 
+    renderDebug();
+    
 	renderer.render(stage);
 
-    renderDebug();
     
 	stats.end();
 
