@@ -67,23 +67,20 @@ function init(data) {
         
 	});
 
+    makeEnemy(32,32);    
+    makeEnemy(64,32);    
+    makeEnemy(96,32);    
     
-    enemy = new Enemy(32,32);
-    enemies.add(enemy);
-    entityLayer.addChild(enemy.sprite);
+    makeEnemy(20,480);
+    makeEnemy(60,480);
     
-    enemy = new Enemy(64,32);
-    enemies.add(enemy);
-    entityLayer.addChild(enemy.sprite);
+    makeEnemy(305,465);
     
-    enemy = new Enemy(96,32);
-    enemies.add(enemy);
-    entityLayer.addChild(enemy.sprite);
+    makeEnemy(130,302);
     
-    enemy = new Enemy(128,32);
-    enemies.add(enemy);
-    entityLayer.addChild(enemy.sprite);
-
+    makeEnemy(315,295);
+    makeEnemy(345,295);
+    
 	// make camera
 	camera = new Camera(renderer.width, renderer.height, world);
 	camera.setTarget(player);
@@ -334,6 +331,12 @@ function renderDebug() {
 }
 
 
-
+function makeEnemy(x,y) {
+ 
+    enemy = new Enemy(x,y);
+    enemies.add(enemy);
+    entityLayer.addChild(enemy.sprite);
+    
+}
 
 
