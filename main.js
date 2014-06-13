@@ -223,6 +223,8 @@ function shoot() {
 
         shootAccumulator -= fireRate;
         
+        camera.shake(2,100);
+        
         var bullet = new Bullet( player.shape.center, input.mouse.worldPosition, 4 );    
         
         bullets.add(bullet);
