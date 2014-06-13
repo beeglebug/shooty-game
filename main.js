@@ -343,5 +343,3 @@ function makeEnemy(x,y) {
     entityLayer.addChild(enemy.sprite);
     
 }
-
-
