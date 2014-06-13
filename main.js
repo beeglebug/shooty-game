@@ -6,6 +6,7 @@ var renderer = PIXI.autoDetectRenderer( width, height );
 var input = new Input();
 var stats = new Stats();
 var world = new PIXI.DisplayObjectContainer();
+var DEBUG = false;
 
 // pixelly goodness
 PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
@@ -311,6 +312,8 @@ function setScale(scale) {
 
 
 function renderDebug() {
+    
+    if(!DEBUG) { return; }
     
     var gfx = debugLayer;
     
