@@ -333,6 +333,14 @@ function renderDebug() {
     
     gfx.drawRect( player.shape.position.x, player.shape.position.y, player.shape.width, player.shape.height );
     
+    gfx.lineStyle(1, 0xFFFFFF);
+    
+    gfx.drawCircle( player.shape.position.x, player.shape.position.y, 1 );
+    
+    var target = player.position._add(player.velocity._multiply(10));
+    
+    gfx.drawCircle( target.x, target.y, 1 );
+    
 }
 
 

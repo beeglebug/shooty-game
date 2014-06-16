@@ -75,4 +75,9 @@ Bullet.prototype.die = function() {
         this.sprite.parent.removeChild( this.sprite );
     }
     
-}
+};
+
+
+Bullet.prototype.getFriction = function() {
+    return 1;
+};
