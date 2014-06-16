@@ -4,21 +4,31 @@ var Camera = function(width, height, world) {
 
 	this.world = world;
 	this.container = new PIXI.DisplayObjectContainer();	
+    
+    // for positioning
 	this.target = null;
-	this.offset = new Vector2();
 
+    this.focalPoint = new Vector2();
+    this.offset = new Vector2();
+
+    // shake variables
     this.shakeOffset = new Vector2();
 	this.shaking = false;
     this.shakeMagnitude = 0;
     this.shakeDuration = 0;
     this.shakeTimer = 0;
     
+    // for shaking randomly
     this.rng = new RNG();
     
 };
 
 Camera.prototype = Object.create(Rect.prototype);
 
+
+/**
+ * center on an object
+ */
 Camera.prototype.setTarget = function(target) {
 	
 	this.target = target;
@@ -30,19 +40,28 @@ Camera.prototype.setTarget = function(target) {
 
 };
 
+
+/**
+ * lock the camera to this rect
+ */
 Camera.prototype.setBounds = function(rect) {
     
     this.bounds = rect;
     
 };
 
+
+/**
+ * calculate the camera position this frame
+ */
 Camera.prototype.update = function(delta) {
 
+    // handle camera shake
     if ( this.shaking ) {
 
         this.shakeTimer += delta;
 
-        // done?
+        // finished shaking
         if(this.shakeTimer >= this.shakeDuration) {
          
             this.shaking = false;
@@ -66,24 +85,31 @@ Camera.prototype.update = function(delta) {
         
     }
     
+    var target = this.target.position._add( this.target.velocity._multiply(10) );
+    
 	this.position.set(
-		this.target.position.x * Game.scale - this.offset.x,
-		this.target.position.y * Game.scale - this.offset.y
+		target.x * Game.scale - this.offset.x,
+		target.y * Game.scale - this.offset.y
 	);
     
     if(this.bounds) {
-        // keep inside
+        // keep inside a rect
         //Physics.constrainRectRect(this, this.bounds);
     }
 
+    // add the shake last so it will still shake even if locked
     this.position.add( this.shakeOffset );
     
+    // translate world (to simulate camera)
 	this.world.position.x = -this.position.x;
 	this.world.position.y = -this.position.y;
 	
 };
 
 
+/**
+ * trigger a camera shake
+ */
 Camera.prototype.shake = function(magnitude, duration) {
   
     this.shaking = true;
