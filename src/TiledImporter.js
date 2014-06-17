@@ -61,7 +61,7 @@ TiledImporter.prototype.parse = function(json) {
                 
                 var collidable = data.properties.collision.split(',');
                 layer.setCollidable( collidable.map(function (x) { 
-                    return +x; // parse int 
+                    return parseInt(x); 
                 }));
             }
         }
@@ -70,6 +70,31 @@ TiledImporter.prototype.parse = function(json) {
         
     });
 
+    // set up pathfinding
+    
+    map.pathfindingGrid = new PF.Grid(json.width, json.height);
+    
+    var solid = map.layers.walls.getCollidable();
+    
+    solid.forEach(function(tile) {
+       
+        map.pathfindingGrid.setWalkableAt(tile.x, tile.y, false);
+        
+    });
+    
+    map.pathfinder = new PF.AStarFinder({
+        allowDiagonal : true,
+        dontCrossCorners : true
+    });
+    
+    map.pathfind = function(from, to) {
+     
+        var path = this.pathfinder.findPath( from.x, from.y, to.x, to.y, this.pathfindingGrid );
+        
+        return PF.Util.compressPath(path);
+        
+    }
+    
     return map;
     
 };

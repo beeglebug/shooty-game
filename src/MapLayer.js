@@ -58,8 +58,8 @@ MapLayer.prototype.generateTiles = function() {
 			tile = new Tile(
 				type,
 				this.tileset.textures[ type - offset ],
-				x * this.tileWidth,
-				y * this.tileHeight
+				x,
+				y
 			);
 			
 			this.tiles.push(tile);
@@ -97,7 +97,9 @@ MapLayer.prototype.setCollidable = function(collidable) {
 		tile = this.tiles[i];
 		
 		if ( collidable.indexOf( tile.type ) < 0 ) { continue; }
-				
+	
+        tile.collidable = true;
+        
 		this._collidables.push( tile );
 		
 	}
