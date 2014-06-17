@@ -30,5 +30,22 @@ function testzone() {
 }
 
 
+PF.Grid.prototype.reset = function() {
+
+    var x, y, xl, yl, node;
+    
+    for (y = 0, yl = this.nodes.length; y < yl; y++) {
+        for (x = 0, xl = this.nodes[y].length; x < xl; x++) {
+            node = this.nodes[y][x];
+            delete(node.closed);
+            delete(node.opened);
+            delete(node.f);
+            delete(node.g);
+        }
+    
+    }
+
+}
+
 
 
