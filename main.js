@@ -225,7 +225,7 @@ function shoot() {
         
         camera.shake(2,100);
         
-        var bullet = new Bullet( player.shape.center, input.mouse.worldPosition, 4 );    
+        var bullet = new Bullet( player.shape.center, input.mouse.worldPosition );    
         
         bullets.add(bullet);
         
@@ -337,9 +337,20 @@ function renderDebug() {
     
     gfx.drawCircle( player.shape.position.x, player.shape.position.y, 1 );
     
-    var target = player.position._add(player.velocity._multiply(10));
+    var target = player.position._add(player.velocity._multiply(30));
     
     gfx.drawCircle( target.x, target.y, 1 );
+    
+    gfx.lineStyle(1, 0x0000FF);
+    
+    var cursor = input.mouse.worldPosition;
+    var diff = cursor._subtract(player.position).divide(5);
+        
+    gfx.drawCircle( 
+        player.position.x + diff.x,
+        player.position.y + diff.y,
+    1 );
+    
     
 }
 
