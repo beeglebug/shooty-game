@@ -22,7 +22,7 @@ Entity.prototype.update = function() {
         
         this.velocity.add(this.acceleration);
         
-        this.velocity.clamp( this.minVelocity, this.maxVelocity );
+        //this.velocity.clamp( this.minVelocity, this.maxVelocity );
         
         this.position.add( this.velocity );
         
