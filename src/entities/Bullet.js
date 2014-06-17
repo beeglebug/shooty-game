@@ -1,4 +1,4 @@
-var Bullet = function( position, target, speed ) {
+var Bullet = function( position, target ) {
   
     Entity.call(this);
     
@@ -14,9 +14,9 @@ var Bullet = function( position, target, speed ) {
     // @todo dont waste an object
     this.velocity = target._subtract( position )
 	                           .normalize()
-	                           .multiply( speed );
+	                           .multiply( 4 );
 	
-	this.sprite.rotation = this.velocity.toRadians();
+    this.sprite.rotation = this.velocity.toRadians();
 	
     this.addEventListener('BULLET_COLLIDE_ENEMY', function( enemy, response ) {
     
