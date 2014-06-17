@@ -33,6 +33,8 @@ Camera.prototype.setTarget = function(target) {
 	
 	this.target = target;
     
+    this.focalPoint.set( this.target.position.x, this.target.position.y );
+    
 	this.offset.set(
 		( this.width / 2 ) - ( target.shape.width / 2 ),
 		( this.height / 2 ) - ( target.shape.height / 2 )
@@ -85,12 +87,36 @@ Camera.prototype.update = function(delta) {
         
     }
     
-    var target = this.target.position._add( this.target.velocity._multiply(10) );
+    /*
+    var target = this.target.position._add( this.target.velocity._multiply(20) );
+
+    if( this.focalPoint.near( target ) ) {
+
+        this.focalPoint.set(target.x, target.y);
+        
+    } else {
+
+        var diff = target._subtract(this.focalPoint);
+        diff.normalise().multiply(2);
+        this.focalPoint.add(diff);
+        
+    }
+    */
+    
+    var cursor = input.mouse.worldPosition;
+    var diff = cursor._subtract(player.position).divide(5);
+    
+    this.focalPoint.set(
+        this.target.position.x + diff.x,
+        this.target.position.y + diff.y
+    );
+    
     
 	this.position.set(
-		target.x * Game.scale - this.offset.x,
-		target.y * Game.scale - this.offset.y
+		this.focalPoint.x * Game.scale - this.offset.x,
+		this.focalPoint.y * Game.scale - this.offset.y
 	);
+    
     
     if(this.bounds) {
         // keep inside a rect
