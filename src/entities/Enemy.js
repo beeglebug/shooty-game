@@ -20,13 +20,19 @@ var Enemy = function( x, y ) {
         
         if(this.health <= 0) {
         
+            var self = this;
+            
             flashSpriteWhite( this.sprite, 100, function() {
-
+            
                 // die
-                this.die();
-
-            }.bind(this) );
+                self.die();
+                
+            });
         
+        } else {
+         
+            flashSpriteWhite( this.sprite, 100);
+            
         }
         
 	});
