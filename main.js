@@ -34,7 +34,7 @@ function init(data) {
     
     importer.addEventListener('complete', function(event) {
     
-        var map = event.content;
+        map = event.content;
     
         loadMap(map);
         
