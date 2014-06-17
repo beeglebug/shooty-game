@@ -4,7 +4,7 @@ function flashSpriteWhite(sprite, length, callback) {
 	sprite.filters = [whiteFilter];
 	setTimeout(function(){
 		sprite.filters = null;
-        callback();
+        if(callback) { callback(); }
 	}, length);
 }
 
