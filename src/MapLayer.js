@@ -53,18 +53,25 @@ MapLayer.prototype.generateTiles = function() {
 			type = this.data[i];
 			
 			// 0 tile is a gap
-			if ( type == 0 ) { continue; }
+			if ( type == 0 ) {
+                
+                tile = null;
             
-			tile = new Tile(
-				type,
-				this.tileset.textures[ type - offset ],
-				x,
-				y
-			);
+            } else {
+            
+                tile = new Tile(
+                    type,
+                    this.tileset.textures[ type - offset ],
+                    x,
+                    y
+                );
 			
+                this.container.addChild( tile.sprite );
+            
+            }
+            
 			this.tiles.push(tile);
 			
-			this.container.addChild( tile.sprite );
 		}
 		
 	}
@@ -96,6 +103,9 @@ MapLayer.prototype.setCollidable = function(collidable) {
 
 		tile = this.tiles[i];
 		
+        // null tiles
+        if(!tile) { continue; }
+        
 		if ( collidable.indexOf( tile.type ) < 0 ) { continue; }
 	
         tile.collidable = true;

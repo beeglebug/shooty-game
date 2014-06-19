@@ -51,7 +51,7 @@ function init(data) {
 	
     player.sprite = new PIXI.Sprite( PIXI.TextureCache['assets/player.png'] );
     player.sprite.anchor.set(0.25, 0.5);
-    player.position.set(37,187);
+    player.position.set(155,200);
 	player.shape = new Rect(8, 8);
 
     entityLayer.addChild( player.sprite );
@@ -77,7 +77,7 @@ function init(data) {
     
     makeEnemy(305,465);
     
-    makeEnemy(130,302);
+    makeEnemy(120,270);
     
     makeEnemy(315,295);
     makeEnemy(345,295);
@@ -110,16 +110,7 @@ function init(data) {
 	// things attached to camera are fixed (ui etc)
 	camera.container.addChild( cursor );
 	
-    // enemy spawner (temp)
-    setInterval(function(){
-        //spawn();
-    }, 1000);
-
     setScale(Game.scale);
-    
-	// go!
-	loop();
-
 }
 
 var walls = [];
@@ -199,7 +190,10 @@ function loop() {
 
 }
 
-function die() { running = false; }
+function die(message) {
+    console.log(message);
+    running = false;
+}
 
 
 var lastShoot;
@@ -235,19 +229,6 @@ function shoot() {
     
     lastShoot = now;
 
-}
-
-
-
-function spawn() {
-    
-    // make enemy
-	var enemy = new Enemy( 220, 120 );
-    
-    enemies.add(enemy);
-    
-    entityLayer.addChild( enemy.sprite );
-    
 }
 
 
@@ -299,6 +280,8 @@ function loadMap(map) {
     
     camera.setBounds( map.layers.floor.shape )
     
+    // @todo move enemy loading etc to some function after map has loaded
+	loop();
 }
 
 function setScale(scale) {
@@ -362,3 +345,6 @@ function makeEnemy(x,y) {
     entityLayer.addChild(enemy.sprite);
     
 }
+
+
+

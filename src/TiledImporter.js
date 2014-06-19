@@ -95,6 +95,19 @@ TiledImporter.prototype.parse = function(json) {
         
     }
     
+    /**
+     * return walkable state at x,y map coordinates
+     */
+    map.getCollidable = function(x, y) {
+        
+        var layer = this.layers.walls;
+        var ix = layer.width * y + x;
+        
+        if(!layer.tiles[ix]) { return false; }
+        
+        return layer.tiles[ix].collidable;
+    };
+    
     return map;
     
 };

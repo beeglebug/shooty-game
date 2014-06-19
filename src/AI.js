@@ -21,8 +21,7 @@ function aaaiii(entity) {
             // compare to current target and decide if more important
         }
     
-        // run away from target
-        // var direction = entity.position._subtract(target.position).normalise();
+        // go towards target
         var direction = target.position._subtract(entity.position).normalise();
     
         entity.velocity.set( direction.x, direction.y );
@@ -40,14 +39,51 @@ function getTargetsInRange(entity, range) {
     for( var i = 0; i < possible.length; i++)
     {    
         if( entity.position.distanceTo( possible[i].position ) < range ) {
-            targets.push( possible[i] );
+            
+            // now test for line of sight
+            var clear = checkLineOfSight(entity.position, player.position);
+            
+            if(clear) {
+                targets.push( possible[i] );
+            }
         }
     }
     
     return targets;
 };
 
+function checkLineOfSight(from, to)
+{ 
+    var ray = new Line();
 
+    ray.start.set(from);
+    ray.end.set(to);
+
+    toTile(ray.start);
+    toTile(ray.end);
+
+    var path = ray.rasterize();
+
+    for( var i = 0; i < path.length; i++) {
+        
+        if(Game.map.getCollidable( path[i].x, path[i].y ) ) {
+            // something blocking line of sight
+            return false;
+        }
+        
+    }
+    
+    return true;
+}
+
+
+function toTile(pos) {
+    
+    var tilesize = 16;
+    
+    pos.x = Math.floor(pos.x / tilesize);
+	pos.y = Math.floor(pos.y / tilesize);
+}
 
 
 
