@@ -12,6 +12,16 @@ var Group = function( memberClass, preallocate ) {
 //    }
 };
 
+// bubble up length property
+Object.defineProperty( Group.prototype, 'length', {
+    
+    get : function() {
+  
+        return this._members.length;
+    
+    }
+        
+});
 
 Group.prototype.call = function( method ) {
  
