@@ -337,12 +337,22 @@ function renderDebug() {
     
 }
 
-
 function makeEnemy(x,y) {
  
     enemy = new Enemy(x,y);
     enemies.add(enemy);
     entityLayer.addChild(enemy.sprite);
+    
+    enemy.addEventListener( 'ENEMY_DIED', function() {
+    
+        Analytics.track('ENEMY_KILLED');
+ 
+        if(enemies.length == 0) {
+            Analytics.track('ALL_ENEMIES_KILLED');
+        }
+    
+    });
+    
     
 }
 
