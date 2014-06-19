@@ -44,6 +44,7 @@ var Enemy = function( x, y ) {
 	
     });
     
+    
 };
 
 Enemy.prototype = Object.create(Entity.prototype);
@@ -72,4 +73,5 @@ Enemy.prototype.die = function() {
         this.sprite.parent.removeChild( this.sprite );
     }
     
+    this.emit('ENEMY_DIED');
 }
