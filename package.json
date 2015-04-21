@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "watchify": "~3.1.2",
-    "browserify": "~9.0.8"
+    "browserify": "~9.0.8",
+    "pixi.js": "~2.2.9"
   }
 }
