@@ -5,8 +5,9 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify app/index.js -o build/app.js --debug",
-    "watch": "watchify app/index.js -o build/app.js --debug"
+    "build": "browserify index.js -o www/js/app.js --debug",
+    "watch": "watchify index.js -o www/js/app.js --debug",
+    "serve": "http-server www"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,8 @@
   },
   "devDependencies": {
     "watchify": "~3.1.2",
-    "browserify": "~9.0.8"
+    "browserify": "~9.0.8",
+    "http-server": "~0.8.0"
   },
   "dependencies": {
     "pixi.js": "~2.2.9",
