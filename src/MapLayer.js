@@ -1,5 +1,11 @@
+var Rect = require('js-game-lib').Rect;
+var PIXI = require('pixi.js');
+var Tile = require('./Tile');
+
+
 /**
  * a single tile map layer
+ * @todo extend sprite instead of being seperate
  */
 var MapLayer = function(json, tileset, tileWidth, tileHeight) {
 
@@ -121,3 +127,5 @@ MapLayer.prototype.getCollidable = function() {
 	return this._collidables;
 	
 };
+
+module.exports = MapLayer;
