@@ -1,5 +1,6 @@
 var PIXI = require('pixi.js');
 var Input = require('js-game-lib').Input;
+var TiledImporter = require('./src/TiledImporter');
 
 var Stage = PIXI.Stage;
 var Renderer = PIXI.WebGLRenderer;
@@ -23,15 +24,14 @@ Input.bindKeyboard(document.body);
 Input.bindMouse(document.body);
 
 
-//// build map
-//var importer = new TiledImporter();
-//
-//importer.addEventListener('complete', function(event) {
-//
-//    map = event.content;
-//
-//    loadMap(map);
-//
-//});
-//
-//importer.load('assets/map.json');
+// build map
+var importer = new TiledImporter();
+
+importer.on('complete', function(map) {
+
+    console.log(map);
+
+    //loadMap(map);
+});
+
+importer.load('assets/map.json');

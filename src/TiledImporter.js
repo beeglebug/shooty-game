@@ -1,33 +1,39 @@
+var EventEmitter = require('events').EventEmitter;
+var inherits = require('util').inherits;
+var PIXI = require('pixi.js');
+var Tileset = require('./Tileset.js');
+var MapLayer = require('./MapLayer.js')
+
+var JsonLoader = PIXI.JsonLoader;
+
 var TiledImporter = function() {
     
-    PIXI.EventTarget.call(this);
+    EventEmitter.call(this);
     
 };
 
-TiledImporter.prototype = Object.create(PIXI.EventTarget.prototype);
+inherits(TiledImporter, EventEmitter);
+
 
 TiledImporter.prototype.load = function(url) {
 
-    this.loader = new PIXI.JsonLoader(url);
+    this.loader = new JsonLoader(url);
     
     this.loader.addEventListener('loaded', function(evt) {
+
+        var map = this.parse( evt.content.content.json );
         
-        var map = this.parse( evt.content.json );
+        //Game.mapCache[map.name] = map;
         
-        Game.mapCache[map.name] = map;
-        
-        this.dispatchEvent({
-            type : 'complete',
-            content : map
-        });
+        this.emit('complete', map);
         
     }.bind(this));
     
     this.loader.load();
-    
 };
 
 
+// @todo make a proper Map class instead of a pojo
 TiledImporter.prototype.parse = function(json) {
     
     var map = {
@@ -70,43 +76,43 @@ TiledImporter.prototype.parse = function(json) {
         
     });
 
-    // set up pathfinding
-    
-    map.pathfindingGrid = new PF.Grid(json.width, json.height);
-    
-    var solid = map.layers.walls.getCollidable();
-    
-    solid.forEach(function(tile) {
-       
-        map.pathfindingGrid.setWalkableAt(tile.x, tile.y, false);
-        
-    });
-    
-    map.pathfinder = new PF.AStarFinder({
-        allowDiagonal : true,
-        dontCrossCorners : true
-    });
-    
-    map.pathfind = function(from, to) {
-     
-        var path = this.pathfinder.findPath( from.x, from.y, to.x, to.y, this.pathfindingGrid );
-        
-        return PF.Util.compressPath(path);
-        
-    }
-    
-    /**
-     * return walkable state at x,y map coordinates
-     */
-    map.getCollidable = function(x, y) {
-        
-        var layer = this.layers.walls;
-        var ix = layer.width * y + x;
-        
-        if(!layer.tiles[ix]) { return false; }
-        
-        return layer.tiles[ix].collidable;
-    };
+    //// set up pathfinding
+    //
+    //map.pathfindingGrid = new PF.Grid(json.width, json.height);
+    //
+    //var solid = map.layers.walls.getCollidable();
+    //
+    //solid.forEach(function(tile) {
+    //
+    //    map.pathfindingGrid.setWalkableAt(tile.x, tile.y, false);
+    //
+    //});
+    //
+    //map.pathfinder = new PF.AStarFinder({
+    //    allowDiagonal : true,
+    //    dontCrossCorners : true
+    //});
+    //
+    //map.pathfind = function(from, to) {
+    //
+    //    var path = this.pathfinder.findPath( from.x, from.y, to.x, to.y, this.pathfindingGrid );
+    //
+    //    return PF.Util.compressPath(path);
+    //
+    //}
+    //
+    ///**
+    // * return walkable state at x,y map coordinates
+    // */
+    //map.getCollidable = function(x, y) {
+    //
+    //    var layer = this.layers.walls;
+    //    var ix = layer.width * y + x;
+    //
+    //    if(!layer.tiles[ix]) { return false; }
+    //
+    //    return layer.tiles[ix].collidable;
+    //};
     
     return map;
     
@@ -139,3 +145,5 @@ TiledImporter.prototype.determineTileset = function(layer, tilesets) {
     return tileset;
     
 };
+
+module.exports = TiledImporter;
