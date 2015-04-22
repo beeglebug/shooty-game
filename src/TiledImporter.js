@@ -1,5 +1,5 @@
 var EventEmitter = require('events').EventEmitter;
-var inherits = require('util').inherits;
+var util = require('util')
 var PIXI = require('pixi.js');
 var Tileset = require('./Tileset.js');
 var MapLayer = require('./MapLayer.js')
@@ -12,7 +12,7 @@ var TiledImporter = function() {
     
 };
 
-inherits(TiledImporter, EventEmitter);
+util.inherits(TiledImporter, EventEmitter);
 
 
 TiledImporter.prototype.load = function(url) {
@@ -35,7 +35,7 @@ TiledImporter.prototype.load = function(url) {
 
 // @todo make a proper Map class instead of a pojo
 TiledImporter.prototype.parse = function(json) {
-    
+
     var map = {
     
         name : json.properties.name,
@@ -49,18 +49,20 @@ TiledImporter.prototype.parse = function(json) {
     json.tilesets.forEach(function(data) {
        
         var tileset = new Tileset( data );
-        
+
         map.tilesets.push(tileset);
-        
     });
     
     json.layers.forEach(function(data) {
        
         var tileset = self.determineTileset(data, map.tilesets);
-        
+
         var layer = new MapLayer( data, tileset, json.tilewidth, json.tileheight );
-        layer.name = data.name;
-        
+
+        tileset.on('loaded', function() {
+            layer.render();
+        });
+
         if( data.properties ) {
             map.properties = data.properties;
             if(data.properties.collision) {
@@ -121,7 +123,7 @@ TiledImporter.prototype.parse = function(json) {
 
 TiledImporter.prototype.determineTileset = function(layer, tilesets) {
   
-    // find largest tiler index
+    // find largest tile index
     var i, max = 0;
     
     for( i = 0; i < layer.data.length; i++) {

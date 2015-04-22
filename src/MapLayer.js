@@ -9,13 +9,14 @@ var Tile = require('./Tile');
  */
 var MapLayer = function(json, tileset, tileWidth, tileHeight) {
 
+    this.name = json.name;
 	this.data = json.data;
 	this.width = json.width;
 	this.height = this.data.length / this.width;
 	this.tileset = tileset;
     this.tileWidth = tileWidth;
     this.tileHeight = tileHeight;
-    
+
 	this._collidables = [];
 	
 	// a rectangle encompassing the map layer
@@ -28,24 +29,21 @@ var MapLayer = function(json, tileset, tileWidth, tileHeight) {
 	this.container = new PIXI.DisplayObjectContainer();
 	
 	this.tiles = [];
-	
+
 	// the render texture which the layer is drawn to
 	this.texture = new PIXI.RenderTexture( this.width * this.tileWidth, this.height * this.tileHeight );
-	
+
 	// the sprite which is attached to the map
 	this.sprite = new PIXI.Sprite( this.texture );
 
-	this.generateTiles();
-	
-	this.render();
-	
+	this.generateTiles(tileWidth, tileHeight);
 };
 
 
 /**
  * generate the map tiles
  */
-MapLayer.prototype.generateTiles = function() {
+MapLayer.prototype.generateTiles = function(width, height) {
 	
 	var x, y, i, type, tile;
 
@@ -64,12 +62,14 @@ MapLayer.prototype.generateTiles = function() {
                 tile = null;
             
             } else {
-            
+
                 tile = new Tile(
                     type,
                     this.tileset.textures[ type - offset ],
                     x,
-                    y
+                    y,
+                    width,
+                    height
                 );
 			
                 this.container.addChild( tile.sprite );
@@ -91,7 +91,7 @@ MapLayer.prototype.generateTiles = function() {
 MapLayer.prototype.render = function() {
 
 	this.texture.render( this.container );
-	
+
 };
 
 

@@ -13,8 +13,9 @@ var width = 800;
 var height = 450;
 var stage = new Stage(0x0000000);
 var renderer = new Renderer( width, height );
-//var world = new DisplayObjectContainer();
+var world = new DisplayObjectContainer();
 
+stage.addChild(world);
 
 // dom binding
 var mount = document.getElementById('app-mount');
@@ -31,7 +32,25 @@ importer.on('complete', function(map) {
 
     console.log(map);
 
+    world.addChild(map.layers.floor.sprite);
+    world.addChild(map.layers.shadows.sprite);
+    world.addChild(map.layers.walls.sprite);
+    world.addChild(map.layers.overhang.sprite);
+
+    map.layers.shadows.sprite.alpha = 0.1;
+
     //loadMap(map);
+
 });
 
+
+function loop() {
+
+    requestAnimationFrame(loop);
+
+    renderer.render(stage);
+}
+
 importer.load('assets/map.json');
+
+loop();
