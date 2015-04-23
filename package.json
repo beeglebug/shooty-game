@@ -24,7 +24,7 @@
     "http-server": "~0.8.0"
   },
   "dependencies": {
-    "pixi.js": "~2.2.9",
+    "pixi.js": "~3.0.1",
     "js-game-lib": "git://github.com/beeglebug/js-game-lib"
   }
 }
