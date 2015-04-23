@@ -45,13 +45,7 @@ TiledImporter.prototype.parse = function(json) {
     };
     
     var self = this;
-    
-    json.tilesets.forEach(function(data) {
-       
-        var tileset = new Tileset( data );
 
-        map.tilesets.push(tileset);
-    });
     
     json.layers.forEach(function(data) {
        
