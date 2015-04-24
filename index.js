@@ -1,16 +1,19 @@
 var PIXI = require('pixi.js');
 var pixiTiled = require('pixi-tiled');
 
+var renderer = new PIXI.WebGLRenderer(800, 600);
+var mount = document.getElementById('app-mount');
+mount.appendChild(renderer.view);
+
 var loader = new PIXI.loaders.Loader();
 
-loader.use(pixiTiled.tiledParser);
+loader.use(pixiTiled.tiledMapParser);
 
-loader.add('assets/map.json');
+loader.add('assets/map.json', function(res) {
 
-loader.once('complete', function() {
+    console.log(res.tiledMap);
 
-    console.log('files loaded');
-
+    renderer.render(res.tiledMap);
 });
 
 loader.load();
