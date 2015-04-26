@@ -5,15 +5,15 @@ var renderer = new PIXI.WebGLRenderer(800, 600);
 var mount = document.getElementById('app-mount');
 mount.appendChild(renderer.view);
 
-var loader = new PIXI.loaders.Loader();
+PIXI.loader.add('assets/map.json', function(res) {
 
-loader.use(pixiTiled.tiledMapParser);
+    var map = res.tiledMap;
 
-loader.add('assets/map.json', function(res) {
+    var solid = map.getTilesByGid([2,3]);
 
-    console.log(res.tiledMap);
+    console.log(map, solid);
 
-    renderer.render(res.tiledMap);
+    renderer.render(map);
 });
 
-loader.load();
+PIXI.loader.load();
